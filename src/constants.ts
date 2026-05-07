@@ -21,7 +21,7 @@ export const MOCK_ALERTS: Alert[] = [
     status: 'Active',
     sentBy: 'Campus Security',
     acknowledgedBy: ['3', '4']
-  },
+  },//this is the constants
   {
     id: 'a2',
     title: 'Final Exam Schedule Update',
