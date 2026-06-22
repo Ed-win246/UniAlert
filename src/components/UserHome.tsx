@@ -127,7 +127,7 @@ export const UserHome: React.FC = () => {
              <div className="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mx-auto text-slate-300 mb-4">
                 <ShieldAlert size={24} />
              </div>
-             <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">No Active Transmissions</p>
+             <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">No Active Transmissions </p>
           </div>
         )}
       </div>
