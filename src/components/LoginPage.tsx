@@ -70,7 +70,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
         {/* Right Side: Form */}
         <div className="w-full md:w-[55%] p-8 md:p-16 bg-white">
           <div className="max-w-sm mx-auto">
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back!</h3>
             <p className="text-gray-500 mb-8">Select your role and enter credentials to access your portal.</p>
 
             <form onSubmit={handleLogin} className="space-y-6">
