@@ -17,10 +17,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     setLoading(true);
     setTimeout(() => {
       const names = {
-        Admin: 'Dr. Sarah Johnson',
-        Staff: 'Prof. Michael Chen',
-        Student: 'Elena Rodriguez',
-        Guest: 'Guest User'
+        Admin: 'Atuhaire Edwin',
+        Staff: 'Mirembe Jovia',
+        Student: 'Jamirah',
+        Guest: 'John Michael'
       };
       onLogin(selectedRole, names[selectedRole]);
       setLoading(false);
