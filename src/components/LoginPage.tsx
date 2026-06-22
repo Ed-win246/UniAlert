@@ -48,7 +48,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
             </div>
             <h2 className="text-4xl font-extrabold leading-tight mb-6 mt-12 italic">
               Empowering <br />
-              <span className="text-orange-500">Safety & Communication</span>
+              <span className="text-orange-500">Safety & Communication Put First</span>
             </h2>
             <p className="text-blue-200 text-lg leading-relaxed max-w-sm">
               The unified emergency and informational broadcast system for Kyambogo University.
