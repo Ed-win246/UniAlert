@@ -39,7 +39,7 @@ export const AdminOverview: React.FC = () => {
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Systems Overview</h1>
-          <p className="text-gray-500 mt-1">Real-time monitoring of campus-wide alerts and engagement.</p>
+          <p className="text-gray-500 mt-1">Real-time monitoring of Kyambogo campus-wide alerts and engagement.</p>
         </div>
         <div className="flex items-center gap-3 bg-white p-1 rounded-xl border border-gray-200 shadow-sm">
           <button className="px-4 py-2 bg-gray-100 font-semibold rounded-lg text-sm">Today</button>
