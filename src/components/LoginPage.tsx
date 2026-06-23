@@ -26,6 +26,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
       setLoading(false);
     }, 800);
   };
+  //new comment to be used here
 
   return (
     <div className="min-h-screen bg-[#1e3a5f] flex items-center justify-center p-4">
