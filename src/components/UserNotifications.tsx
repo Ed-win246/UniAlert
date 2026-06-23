@@ -96,7 +96,7 @@ export const UserNotifications: React.FC = () => {
                        <span className="font-bold text-slate-700 text-xs">{pref.category}</span>
                     </div>
                     <div className="flex justify-center">
-                       <button 
+                       <button
                         onClick={() => toggleChannel(pref.category, 'inApp')}
                         className={`w-9 h-5 rounded-full p-1 transition-colors ${pref.channels.inApp ? 'bg-[#1e3a5f]' : 'bg-slate-200'}`}
                        >
