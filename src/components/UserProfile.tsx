@@ -9,6 +9,7 @@ import {
   CreditCard, 
   ShieldCheck,
   Edit2,
+   ChevronRight,
   Clock,
   ExternalLink
 } from 'lucide-react';

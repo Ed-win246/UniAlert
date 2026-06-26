@@ -24,13 +24,14 @@ export const SidebarItem: React.FC<SidebarItemProps> = ({ icon: Icon, label, isA
   </button>
 );
 
-export const Card: React.FC<{ children: React.ReactNode; className?: string; title?: string; borderLeft?: string }> = ({ 
+export const Card: React.FC<React.HTMLAttributes<HTMLDivElement> & { children: React.ReactNode; title?: string; borderLeft?: string }> = ({ 
   children, 
   className = '', 
   title,
-  borderLeft
+  borderLeft,
+  ...props
 }) => (
-  <div className={`bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden ${borderLeft ? `border-l-4 ${borderLeft}` : ''} ${className}`}>
+  <div {...props} className={`bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden ${borderLeft ? `border-l-4 ${borderLeft}` : ''} ${className}`}>
     {title && (
       <div className="px-6 py-4 border-b border-slate-100 flex justify-between items-center bg-white">
         <h3 className="font-bold text-slate-700">{title}</h3>
