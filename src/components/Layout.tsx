@@ -26,7 +26,7 @@ interface LayoutProps {
   onNavigate: (path: string) => void;
   userName: string;
 }
-
+// dont use the fucntion component for the layout use type or interface instead
 export const Layout: React.FC<LayoutProps> = ({ 
   children, 
   userRole, 
