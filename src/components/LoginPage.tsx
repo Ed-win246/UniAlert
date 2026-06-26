@@ -18,9 +18,9 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     setTimeout(() => {
       const names = {
         Admin: 'Atuhaire Edwin',
-        Staff: 'Mirembe Jovia',
+        Staff: 'Tumukunde',
         Student: 'Jamirah',
-        Guest: 'John Michael'
+        Guest: 'Guest User'
       };
       onLogin(selectedRole, names[selectedRole]);
       setLoading(false);
