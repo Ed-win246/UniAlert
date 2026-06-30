@@ -1,8 +1,3 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
 import { useState, useEffect } from 'react';
 import { LoginPage } from './components/LoginPage';
 import { Layout } from './components/Layout';
