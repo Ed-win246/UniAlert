@@ -64,8 +64,8 @@ function validateForm(data:LoginFormData):LoginFormErrors{
   }
   if(!data.password.trim()){
     errors.password='Password is required';
-  }else if(!/^\d{6,}$/.test(data.password)){
-    errors.password='Password must be at least 6 characters long';
+  }else if(!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_#])/.test(data.password)){
+    errors.password='Must have uppercase, lowercase, number and special character.';
   }
   if (!data.role) {
     errors.role='Please select a role';
@@ -74,16 +74,16 @@ function validateForm(data:LoginFormData):LoginFormErrors{
 }
 
   return (
-    <div className="min-h-screen bg-gray-400 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-200 flex items-center justify-center p-4">
       {/* Dynamic Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-500/10 rounded-full blur-[120px]"></div>
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-400/10 rounded-full blur-[120px]"></div>
       </div>
 
-      <div className="w-[80vw] h-[50vh] min-h-[480px] bg-white rounded-xl shadow-2xl overflow-auto flex flex-col md:flex-row relative z-10 border border-white/20">
+      <div className="w-[80vw] h-[50vh] min-h-[480px] bg-white rounded-xl shadow-2xl overflow-auto flex flex-col md:flex-row relative z-10 border-gray-200 border-white/20">
         {/* Left Side: Branding */}
-        <div className="w-full md:w-[45%] bg-[#1a3354] p-12 text-white flex flex-col justify-between relative">
+        <div className="w-full md:w-[45%] bg-[#000000] p-12 text-white flex flex-col justify-between relative">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
           <div>
             <div className="flex items-center gap-3 mb-8">
