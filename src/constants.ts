@@ -1,4 +1,4 @@
-import { Alert, User, Role } from './types';
+import { Alert, User, Role,  } from './types';
 
 export const MOCK_USERS: User[] = [
   { id: '1', name: 'Atuhaire Edwin', role: 'Admin', department: 'Administration', email: '2300815040@std.ku.ac.ug', phone: '0745028870', status: 'Active', idNumber: 'ADM-001' },
