@@ -56,7 +56,7 @@ export const Layout: React.FC<LayoutProps> = ({
 
   return (
     <div className="flex h-screen bg-[#f1f5f9] overflow-hidden font-sans">
-      {/* Sidebar - Desktop */}
+
       <aside 
         className={`hidden md:flex flex-col bg-[#1e3a5f] text-white transition-all duration-300 ease-in-out ${
           collapsed ? 'w-20' : 'w-64'
