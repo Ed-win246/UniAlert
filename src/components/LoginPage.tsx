@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { ShieldAlert, BookOpen, UserCheck, Eye, EyeOff, User } from 'lucide-react';
 import { Role } from '../types';
 import { Button } from './Common';
+import {LoginFormData, LoginFormErrors} from '../types';
 
 interface LoginPageProps {
   onLogin: (role: Role, name: string) => void;
 }
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
-  const [selectedRole, setSelectedRole] = useState<Role>('Student');
+  const [selectedRole, setSelectedRole] = useState<Role>('Admin');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -26,7 +27,20 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
       setLoading(false);
     }, 800);
   };
-
+function validateForm(data:LoginFormData):LoginFormErrors{
+  const errors:LoginFormErrors= {general:''}
+  if (!data.email.trim()){
+    errors.email='Email is required';
+  }else if(!/^[^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)){
+    errors.email='Enter a valid Email address';
+  }
+  if(!data.password.trim()){
+    errors.password='Password is required';
+  }else if(!/^\d+$/.test(data.password)){
+    errors.password='Password must be at least 6 characters long';
+  }
+  return errors;
+}
   return (
     <div className="min-h-screen bg-gray-400 flex items-center justify-center p-4">
       {/* Dynamic Background Elements */}
