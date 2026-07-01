@@ -127,6 +127,7 @@ export const Layout: React.FC<LayoutProps> = ({
             <button 
               className="md:hidden p-2 hover:bg-gray-100 rounded-lg text-slate-500"
               onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open menu"
             >
               <Menu size={24} />
             </button>
@@ -137,7 +138,7 @@ export const Layout: React.FC<LayoutProps> = ({
 
           <div className="flex items-center gap-6">
             <div className="relative">
-              <button className="p-2 rounded-full hover:bg-slate-100 text-slate-500 transition-colors">
+              <button className="p-2 rounded-full hover:bg-slate-100 text-slate-500 transition-colors" aria-label="Notifications">
                 <Bell size={22} />
                 <span className="absolute top-1 right-1 bg-[#f97316] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold border-2 border-white">
                   3
