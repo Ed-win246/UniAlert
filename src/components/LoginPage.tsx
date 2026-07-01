@@ -12,9 +12,36 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const [selectedRole, setSelectedRole] = useState<Role>('Admin');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [formData, setFormData]=useState<LoginFormData>({email:'',password:'',role:'Admin'});
+  const [errors, setErrors]=useState<LoginFormErrors>({general:''});
+
+  const handleChange=(field: keyof LoginFormData, value:string)=>{
+    setFormData(prev=>({...prev, [field]:value}));
+
+    if (field !== 'role' && errors[field]) {
+      setErrors(prev=>({...prev, [field]: undefined}));
+    }
+
+    if (errors.general) {
+      setErrors(prev=>({...prev, general: ''}));
+    }
+  };
+
+  const handleRoleSelect = (role: Role) => {
+    setSelectedRole(role);
+    handleChange('role', role);
+  };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const validationErrors = validateForm(formData);
+    setErrors(validationErrors);
+
+    if (validationErrors.email || validationErrors.password || validationErrors.role) {
+      return;
+    }
+
     setLoading(true);
     setTimeout(() => {
       const names = {
@@ -23,24 +50,29 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
         Student: 'Jamirah',
         Guest: 'Guest User'
       };
-      onLogin(selectedRole, names[selectedRole]);
+      onLogin(formData.role, names[formData.role]);
       setLoading(false);
     }, 800);
   };
+
 function validateForm(data:LoginFormData):LoginFormErrors{
   const errors:LoginFormErrors= {general:''}
   if (!data.email.trim()){
     errors.email='Email is required';
-  }else if(!/^[^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)){
+  }else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)){
     errors.email='Enter a valid Email address';
   }
   if(!data.password.trim()){
     errors.password='Password is required';
-  }else if(!/^\d+$/.test(data.password)){
+  }else if(!/^\d{6,}$/.test(data.password)){
     errors.password='Password must be at least 6 characters long';
+  }
+  if (!data.role) {
+    errors.role='Please select a role';
   }
   return errors;
 }
+
   return (
     <div className="min-h-screen bg-gray-400 flex items-center justify-center p-4">
       {/* Dynamic Background Elements */}
@@ -94,7 +126,7 @@ function validateForm(data:LoginFormData):LoginFormErrors{
                   <button
                     key={role}
                     type="button"
-                    onClick={() => setSelectedRole(role)}
+                    onClick={() => handleRoleSelect(role)}
                     className={`py-1 px-1 rounded-xl border-2 transition-all duration-200 flex flex-col items-center gap-1 group ${
                       selectedRole === role 
                         ? 'border-orange-500 bg-orange-50 text-orange-700 shadow-md transform -translate-y-1' 
@@ -114,17 +146,20 @@ function validateForm(data:LoginFormData):LoginFormErrors{
                   <label className="block text-sm font-semibold text-gray-700 mb-1 uppercase tracking-wide">University Email</label>
                   <input 
                     type="email" 
-                    required
+                    value={formData.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
                     placeholder="2300****@std.kyu.ac.ug"
                     className="w-full px-2 py-2 rounded-xl border border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all placeholder:text-gray-400"
                   />
+                  {errors.email && <p className="text-sm text-red-600 mt-1">{errors.email}</p>}
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-1 uppercase tracking-wide">Password</label>
                   <div className="relative">
                     <input 
                       type={showPassword ? "text" : "password"} 
-                      required
+                      value={formData.password}
+                      onChange={(e) => handleChange('password', e.target.value)}
                       placeholder="Enter your password!"
                       className="w-full px-2 py-2 rounded-xl border border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all placeholder:text-gray-400"
                     />
@@ -136,6 +171,7 @@ function validateForm(data:LoginFormData):LoginFormErrors{
                       {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                   </div>
+                  {errors.password && <p className="text-sm text-red-600 mt-1">{errors.password}</p>}
                 </div>
                 <div className="flex items-center justify-between">
                   <label className="flex items-center gap-2 cursor-pointer">
