@@ -28,3 +28,15 @@ export interface Alert {
   sentBy: string;
   acknowledgedBy?: string[];
 }
+//handling the error messages for the login form
+export interface LoginFormErrors{
+  email?:string;
+  password?:string;
+  role?:string;
+  general:string;
+}
+ export interface LoginFormData{
+  email:string;
+  password:string;
+  role:Role;
+ }
