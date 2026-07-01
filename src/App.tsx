@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { LoginPage } from './components/LoginPage';
 import { Layout } from './components/Layout';
 import { AdminOverview } from './components/AdminOverview';
@@ -11,33 +12,89 @@ import { UserNotifications } from './components/UserNotifications';
 import { UserProfile } from './components/UserProfile';
 import { Role } from './types';
 
-export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userRole, setUserRole] = useState<Role>('Guest');
-  const [userName, setUserName] = useState('');
-  const [activePath, setActivePath] = useState('overview');
+interface StoredAuth {
+  isLoggedIn: boolean;
+  userRole: Role;
+  userName: string;
+}
 
-  // Set default active path based on role on login
-  useEffect(() => {
-    if (isLoggedIn) {
-      if (userRole === 'Admin') {
-        setActivePath('overview');
-      } else {
-        setActivePath('feed');
-      }
+const AUTH_STORAGE_KEY = 'unialert-auth';
+
+const getRouteFromPath = (role: Role, path: string) => {
+  const segments = path.split('/').filter(Boolean);
+  const page = segments[segments.length - 1];
+  const adminPaths = ['overview', 'alerts', 'users', 'analytics', 'settings'];
+  const userPaths = ['feed', 'notifications', 'profile'];
+  const validPaths = role === 'Admin' ? adminPaths : userPaths;
+
+  if (!page || page === 'admin' || page === 'user') {
+    return role === 'Admin' ? 'overview' : 'feed';
+  }
+
+  return validPaths.includes(page) ? page : (role === 'Admin' ? 'overview' : 'feed');
+};
+
+const buildRoutePath = (role: Role, path: string) => {
+  const basePath = role === 'Admin' ? '/admin' : '/user';
+  return `${basePath}/${path}`;
+};
+
+const getStoredAuth = (): StoredAuth | null => {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  try {
+    const stored = window.localStorage.getItem(AUTH_STORAGE_KEY);
+    if (!stored) {
+      return null;
     }
-  }, [isLoggedIn, userRole]);
 
-  const handleLogin = (role: Role, name: string) => {
-    setUserRole(role);
-    setUserName(name);
-    setIsLoggedIn(true);
-  };
+    const parsed = JSON.parse(stored) as Partial<StoredAuth>;
+    if (parsed.isLoggedIn && parsed.userRole && typeof parsed.userName === 'string') {
+      return {
+        isLoggedIn: true,
+        userRole: parsed.userRole as Role,
+        userName: parsed.userName,
+      };
+    }
+  } catch {
+    window.localStorage.removeItem(AUTH_STORAGE_KEY);
+  }
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUserRole('Guest');
-    setUserName('');
+  return null;
+};
+
+const saveStoredAuth = (auth: StoredAuth) => {
+  if (typeof window !== 'undefined') {
+    window.localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(auth));
+  }
+};
+
+const clearStoredAuth = () => {
+  if (typeof window !== 'undefined') {
+    window.localStorage.removeItem(AUTH_STORAGE_KEY);
+  }
+};
+
+const AppShell = ({
+  userRole,
+  userName,
+  onLogout,
+  isLoggedIn,
+}: {
+  userRole: Role;
+  userName: string;
+  onLogout: () => void;
+  isLoggedIn: boolean;
+}) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const activePath = getRouteFromPath(userRole, location.pathname);
+
+  const handleNavigate = (path: string) => {
+    navigate(buildRoutePath(userRole, path));
   };
 
   const renderContent = () => {
@@ -50,29 +107,91 @@ export default function App() {
         case 'settings': return <AdminSettings />;
         default: return <AdminOverview />;
       }
-    } else {
-      switch (activePath) {
-        case 'feed': return <UserHome />;
-        case 'notifications': return <UserNotifications />;
-        case 'profile': return <UserProfile userName={userName} role={userRole} />;
-        default: return <UserHome />;
-      }
+    }
+
+    switch (activePath) {
+      case 'feed': return <UserHome />;
+      case 'notifications': return <UserNotifications />;
+      case 'profile': return <UserProfile userName={userName} role={userRole} />;
+      default: return <UserHome />;
     }
   };
 
   if (!isLoggedIn) {
-    return <LoginPage onLogin={handleLogin} />;
+    return <Navigate to="/" replace />;
   }
 
   return (
-    <Layout 
-      userRole={userRole} 
-      onLogout={handleLogout} 
-      activePath={activePath} 
-      onNavigate={setActivePath}
+    <Layout
+      userRole={userRole}
+      onLogout={onLogout}
+      activePath={activePath}
+      onNavigate={handleNavigate}
       userName={userName}
     >
       {renderContent()}
     </Layout>
+  );
+};
+
+export default function App() {
+  const persistedAuth = getStoredAuth();
+  const [isLoggedIn, setIsLoggedIn] = useState(persistedAuth?.isLoggedIn ?? false);
+  const [userRole, setUserRole] = useState<Role>(persistedAuth?.userRole ?? 'Guest');
+  const [userName, setUserName] = useState(persistedAuth?.userName ?? '');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      clearStoredAuth();
+      return;
+    }
+
+    saveStoredAuth({ isLoggedIn, userRole, userName });
+  }, [isLoggedIn, userRole, userName]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      return;
+    }
+
+    const expectedPath = buildRoutePath(userRole, getRouteFromPath(userRole, window.location.pathname));
+    if (window.location.pathname !== expectedPath) {
+      navigate(expectedPath, { replace: true });
+    }
+  }, [isLoggedIn, userRole, navigate]);
+
+  const handleLogin = (role: Role, name: string) => {
+    setUserRole(role);
+    setUserName(name);
+    setIsLoggedIn(true);
+    navigate(role === 'Admin' ? '/admin/overview' : '/user/feed', { replace: true });
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUserRole('Guest');
+    setUserName('');
+    navigate('/', { replace: true });
+  };
+
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={isLoggedIn ? <Navigate to={userRole === 'Admin' ? '/admin/overview' : '/user/feed'} replace /> : <LoginPage onLogin={handleLogin} />}
+      />
+      <Route
+        path="/*"
+        element={
+          <AppShell
+            userRole={userRole}
+            userName={userName}
+            onLogout={handleLogout}
+            isLoggedIn={isLoggedIn}
+          />
+        }
+      />
+    </Routes>
   );
 }
