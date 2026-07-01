@@ -28,7 +28,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-400 flex items-center justify-center p-4">
       {/* Dynamic Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-500/10 rounded-full blur-[120px]"></div>
@@ -48,7 +48,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
             </div>
             <h2 className="text-4xl font-extrabold leading-tight mb-2 mt-2 italic">
               Empowering <br />
-              <span className="text-orange-500">Safety & Communication Put First</span>
+              <span className="text-orange-500">Safety & Communication Put First.</span>
             </h2>
             <p className="text-blue-200 text-lg leading-relaxed max-w-sm">
               The unified emergency and informational broadcast system for Kyambogo University.
@@ -63,15 +63,15 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 </div>
               ))}
             </div>
-            <span>Trusted by 12,000+ Students & Staff</span>
+            <span>Trusted by 12,000+ Students & Staff At Kyambogo</span>
           </div>
         </div>
 
         {/* Right Side: Form */}
         <div className="w-full md:w-[55%] p-4 md:p-8 bg-white">
           <div className="max-w-sm mx-auto">
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back!</h3>
-            <p className="text-gray-500 mb-2">Select your role and enter credentials to access your portal.</p>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2 "><span className="underline">Welcome Back!</span></h3>
+            <p className="text-gray-500 mb-2">Select Your Role and Enter Credentials To Access Your Portal!.</p>
 
             <form onSubmit={handleLogin} className="space-y-6">
               {/* Role Selection */}
@@ -102,7 +102,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                     type="email" 
                     required
                     placeholder="2300****@std.kyu.ac.ug"
-                    className="w-full px-2 py-2 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all placeholder:text-gray-400"
+                    className="w-full px-2 py-2 rounded-xl border border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all placeholder:text-gray-400"
                   />
                 </div>
                 <div>
@@ -112,7 +112,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                       type={showPassword ? "text" : "password"} 
                       required
                       placeholder="Enter your password!"
-                      className="w-full px-2 py-2 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all placeholder:text-gray-400"
+                      className="w-full px-2 py-2 rounded-xl border border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all placeholder:text-gray-400"
                     />
                     <button 
                       type="button"
