@@ -153,11 +153,20 @@ export const Layout: React.FC<LayoutProps> = ({
           </div>
         </header>
 
+
         {/* Content Area */}
         <main className="flex-1 overflow-y-auto p-6 lg:p-8">
           {children}
+        {/* Footer */}
+        <footer className="bg-[#1e3a5f] text-white p-4 text-center mt-2 shadow-inner w-full">
+          <p>&copy; 2026 Kyambogo University. All rights reserved.</p>
+        </footer>
+
         </main>
+
       </div>
+
+
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
@@ -199,6 +208,7 @@ export const Layout: React.FC<LayoutProps> = ({
           </div>
         </div>
       )}
+
     </div>
   );
 };
