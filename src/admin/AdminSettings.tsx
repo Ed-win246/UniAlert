@@ -10,7 +10,7 @@ import {
   Globe,
   Plus
 } from 'lucide-react';
-import { Card, Button, Badge } from './Common';
+import { Card, Button, Badge } from '../components/Common';
 
 export const AdminSettings: React.FC = () => {
   return (
@@ -28,7 +28,7 @@ export const AdminSettings: React.FC = () => {
                 <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">Institution Name</label>
                 <input 
                   type="text" 
-                  defaultValue="Northwood University" 
+                  defaultValue="Kyambogo University" 
                   className="w-full px-4 py-3 rounded border border-slate-200 focus:border-[#1e3a5f] focus:ring-1 focus:ring-[#1e3a5f]/20 outline-none transition-all text-sm font-medium"
                 />
               </div>
@@ -36,7 +36,7 @@ export const AdminSettings: React.FC = () => {
                 <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">Institutional Domain</label>
                 <input 
                   type="text" 
-                  defaultValue="edu.campusverify.org"
+                  defaultValue="kyualert.kyu.ac.ug"
                   className="w-full px-4 py-3 rounded border border-slate-200 focus:border-[#1e3a5f] focus:ring-1 focus:ring-[#1e3a5f]/20 outline-none transition-all text-sm font-medium"
                 />
               </div>

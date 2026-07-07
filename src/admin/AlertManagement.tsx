@@ -14,9 +14,9 @@ import {
   Clock,
   Users
 } from 'lucide-react';
-import { Card, Badge, Button } from './Common';
+import { Card, Badge, Button } from '../components/Common';
 import { MOCK_ALERTS, SEVERITY_COLORS, CATEGORY_COLORS } from '../constants';
-import { Alert, AlertCategory, Severity, TargetAudience } from '../types';
+import { Alert, AlertCategory, AlertSeverity, TargetAudience } from '../types';
 
 export const AlertManagement: React.FC = () => {
   const [alerts, setAlerts] = useState<Alert[]>(MOCK_ALERTS);
@@ -27,7 +27,7 @@ export const AlertManagement: React.FC = () => {
   const [newAlert, setNewAlert] = useState({
     title: '',
     category: 'General' as AlertCategory,
-    severity: 'Medium' as Severity,
+    severity: 'Medium' as AlertSeverity,
     targetAudience: 'All' as TargetAudience,
     message: '',
     channels: ['In-App'] as ('In-App' | 'Email' | 'SMS')[],
@@ -231,7 +231,7 @@ export const AlertManagement: React.FC = () => {
                   <select 
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 outline-none bg-white font-medium"
                     value={newAlert.severity}
-                    onChange={e => setNewAlert({...newAlert, severity: e.target.value as Severity})}
+                    onChange={e => setNewAlert({...newAlert, severity: e.target.value as AlertSeverity})}
                   >
                     {['Low', 'Medium', 'High', 'Critical'].map(sev => (
                       <option key={sev} value={sev}>{sev}</option>

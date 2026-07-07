@@ -59,7 +59,7 @@ export const Layout: React.FC<LayoutProps> = ({
 
       <aside 
         className={`hidden md:flex flex-col bg-[#1e3a5f] text-white transition-all duration-300 ease-in-out ${
-          collapsed ? 'w-20' : 'w-64'
+          collapsed ? 'w-20' : 'w-60'
         }`}
       >
         <div className="p-6 border-b border-[#2d4d71] flex items-center gap-3">
@@ -122,7 +122,7 @@ export const Layout: React.FC<LayoutProps> = ({
       {/* Main Content */}
       <div className="flex-1 flex flex-col h-full overflow-hidden">
         {/* Header */}
-        <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 shrink-0 z-20 shadow-sm">
+        <header className="h-16 bg-[#ffffff] border-b border-slate-200 flex items-center justify-between px-8 shrink-0 z-20 shadow-sm">
           <div className="flex items-center gap-4">
             <button 
               className="md:hidden p-2 hover:bg-gray-100 rounded-lg text-slate-500"
@@ -131,7 +131,7 @@ export const Layout: React.FC<LayoutProps> = ({
             >
               <Menu size={24} />
             </button>
-            <h1 className="text-xl font-bold text-[#1e3a5f] hidden sm:block">
+            <h1 className="text-xl font-bold text-[#000000] hidden sm:block">
               {menuItems.find(i => i.id === activePath)?.label || 'Dashboard'}
             </h1>
           </div>

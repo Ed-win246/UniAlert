@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { LoginPage } from './components/LoginPage';
+import { AdminLoginPage } from './admin/AdminLoginPage';
 import { Layout } from './components/Layout';
-import { AdminOverview } from './components/AdminOverview';
-import { AlertManagement } from './components/AlertManagement';
+import { AdminOverview } from './admin/AdminOverview';
+import { AlertManagement } from './admin/AlertManagement';
 import { UserManagement } from './components/UserManagement';
-import { AdminAnalytics } from './components/AdminAnalytics';
-import { AdminSettings } from './components/AdminSettings';
+import { AdminAnalytics } from './admin/AdminAnalytics';
+import { AdminSettings } from './admin/AdminSettings';
+import {LoginPage} from './components/LoginPage';
 import { UserHome } from './components/UserHome';
 import { UserNotifications } from './components/UserNotifications';
 import { UserProfile } from './components/UserProfile';
@@ -137,7 +138,7 @@ const AppShell = ({
 export default function App() {
   const persistedAuth = getStoredAuth();
   const [isLoggedIn, setIsLoggedIn] = useState(persistedAuth?.isLoggedIn ?? false);
-  const [userRole, setUserRole] = useState<Role>(persistedAuth?.userRole ?? 'Guest');
+  const [userRole, setUserRole] = useState<Role>(persistedAuth?.userRole ?? 'Staff');
   const [userName, setUserName] = useState(persistedAuth?.userName ?? '');
   const navigate = useNavigate();
 
@@ -161,16 +162,23 @@ export default function App() {
     }
   }, [isLoggedIn, userRole, navigate]);
 
+  const handleAdminLogin = (name: string) => {
+    setUserRole('Admin');
+    setUserName(name);
+    setIsLoggedIn(true);
+    navigate('/admin/overview', { replace: true });
+  };
+
   const handleLogin = (role: Role, name: string) => {
     setUserRole(role);
     setUserName(name);
     setIsLoggedIn(true);
-    navigate(role === 'Admin' ? '/admin/overview' : '/user/feed', { replace: true });
+    navigate('/user/feed', { replace: true });
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    setUserRole('Guest');
+    setUserRole('Staff');
     setUserName('');
     navigate('/', { replace: true });
   };
@@ -179,7 +187,11 @@ export default function App() {
     <Routes>
       <Route
         path="/"
-        element={isLoggedIn ? <Navigate to={userRole === 'Admin' ? '/admin/overview' : '/user/feed'} replace /> : <LoginPage onLogin={handleLogin} />}
+        element={isLoggedIn ? <Navigate to={userRole === 'Admin' ? '/admin/overview' : '/user/feed'} replace /> : <AdminLoginPage onLogin={handleAdminLogin} />}
+      />
+      <Route
+        path="/user/login"
+        element={<LoginPage onLogin={handleLogin} />}
       />
       <Route
         path="/*"

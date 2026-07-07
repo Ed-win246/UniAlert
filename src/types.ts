@@ -3,6 +3,7 @@ export type Role = 'Admin' | 'Student' | 'Staff' | 'Guest';
 export type AlertCategory = 'Emergency' | 'Academic' | 'General' | 'Health' | 'Security';
 export type AlertSeverity = 'Low' | 'Medium' | 'High' | 'Critical';
 export type AlertStatus = 'Active' | 'Resolved' | 'Draft';
+export type TargetAudience = 'All' | 'Students' | 'Staff' | 'Guests';
 
 export interface User {
   id: string;
@@ -38,5 +39,5 @@ export interface LoginFormErrors{
  export interface LoginFormData{
   email:string;
   password:string;
-  role:Role;
+  role?:Role;
  }

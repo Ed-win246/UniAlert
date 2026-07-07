@@ -22,7 +22,7 @@ import {
   Activity,
   Award
 } from 'lucide-react';
-import { Card } from './Common';
+import { Card } from '../components/Common';
 import { CHART_DATA_DELIVERY } from '../constants';
 
 const ACK_DATA = [
