@@ -1,4 +1,4 @@
-export type Role = 'Admin' | 'Student' | 'Staff' | 'Guest';
+export type Role ='Student' | 'Staff' | 'Guest';
 
 export type AlertCategory = 'Emergency' | 'Academic' | 'General' | 'Health' | 'Security';
 export type AlertSeverity = 'Low' | 'Medium' | 'High' | 'Critical';
@@ -39,5 +39,5 @@ export interface LoginFormErrors{
  export interface LoginFormData{
   email:string;
   password:string;
-  role?:Role;
+  role:Role;
  }
