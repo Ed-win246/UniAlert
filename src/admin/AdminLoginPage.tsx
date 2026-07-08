@@ -65,21 +65,11 @@ function validateForm(data:LoginFormData):LoginFormErrors{
 }
 
   return (
-    <div className="min-h-screen bg-[#1a2744] flex items-center justify-center p-4">
-
-      {/* Dynamic Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 rounded-full blur-[120px]"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-400/10 rounded-full blur-[120px]"></div>
-      </div>
-
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-auto flex flex-col relative z-10 px-10 py-10">
-
-        {/* Right Side: Form */}
-        <div className="w-full flex justify-center items-center">
+    <div className="min-h-screen bg-[#12003d] flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-auto flex flex-col relative z-10 px-10 py-10 backdrop-blur-md ">
+        <div className="w-full flex justify-center items-center ">
           <div className="w-full">
-
-            {/* Admin badge */}
+            
             <div className="flex justify-center mb-6">
               <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200 rounded-full px-4 py-1.5">
                 <ShieldAlert size={14} className="text-red-500" />
