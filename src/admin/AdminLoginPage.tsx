@@ -25,8 +25,6 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onLogin }) => {
     }
   };
 
-
-
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -56,92 +54,136 @@ function validateForm(data:LoginFormData):LoginFormErrors{
   }
   if(!data.password.trim()){
     errors.password='Password is required';
-  }else if(!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_#])/.test(data.password)){
+  }else if(data.password.length<6){
+    errors.password='Password must be at least 6 characters long.!';
+
+  }
+  else if(!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_#])/.test(data.password)){
     errors.password='Must have uppercase, lowercase, number and special character.';
   }
   return errors;
 }
 
   return (
-    <div className="min-h-screen bg-orange-400 flex items-center justify-center p-4">
-      {/* Dynamic Background Elements */}
-      
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-orange-500/10 rounded-full blur-[120px]"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-400/10 rounded-full blur-[120px]"></div>
-      </div> 
+    <div className="min-h-screen bg-[#1a2744] flex items-center justify-center p-4">
 
-      <div className="w-[40vw] h-[50vh] min-h-[200px] bg-red-900 rounded-xl shadow-2xl overflow-auto flex flex-col md:flex-row relative z-10 border-blue-200 border-blue-500/20 px-10 py-10">
+      {/* Dynamic Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-400/10 rounded-full blur-[120px]"></div>
+      </div>
+
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-auto flex flex-col relative z-10 px-10 py-10">
 
         {/* Right Side: Form */}
-        <div className="w-[40vw] md:w-[40vw] p-4 md:p-2 bg-blue- flex justify-center items-center">
-          <div className="max-w-sm mx-auto">
-            <h3 className="text-2xl font-bold  mb-2 text-center text-blue-800">Log In To Your Account!</h3>
-            <p className="text-gray-500 mb-2">Enter Credentials To Access Your Portal!.</p>
+        <div className="w-full flex justify-center items-center">
+          <div className="w-full">
+
+            {/* Admin badge */}
+            <div className="flex justify-center mb-6">
+              <div className="inline-flex items-center gap-2 bg-red-50 border border-red-200 rounded-full px-4 py-1.5">
+                <ShieldAlert size={14} className="text-red-500" />
+                <span className="text-red-600 text-xs font-semibold uppercase tracking-wide">
+                  Admin access only
+                </span>
+              </div>
+            </div>
+
+            <h3 className="text-2xl font-bold mb-2 text-center text-[#1a2744]">
+              Log In To Your Account!
+            </h3>
+            <p className="text-slate-400 text-sm text-center mb-6">
+              Enter Credentials To Access Your Portal!.
+            </p>
 
             <form onSubmit={handleLogin} className="space-y-6">
-              <div className="space-y-2">
+              <div className="space-y-4">
+
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1 uppercase tracking-wide">University Email</label>
-                  <input 
-                    type="email" 
+                  <label className="block text-sm font-semibold text-slate-700 mb-1.5 uppercase tracking-wide">
+                    University Email
+                  </label>
+                  <input
+                    type="email"
                     value={formData.email}
                     onChange={(e) => handleChange('email', e.target.value)}
                     placeholder="2300****@std.kyu.ac.ug"
-                    className="w-full px-2 py-2 rounded-xl border border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all placeholder:text-gray-400"
+                    className={`w-full px-4 py-2.5 rounded-xl border text-sm
+                      placeholder:text-slate-400 outline-none transition-all
+                      ${errors.email
+                        ? 'border-red-400 bg-red-50 focus:border-red-500'
+                        : 'border-slate-300 bg-slate-50 focus:border-[#1a2744] focus:ring-2 focus:ring-[#1a2744]/10'
+                      }`}
                   />
-                  {errors.email && <p className="text-sm text-red-600 mt-1">{errors.email}</p>}
+                  {errors.email && (
+                    <p className="text-xs text-red-600 mt-1">{errors.email}</p>
+                  )}
                 </div>
+
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1 uppercase tracking-wide">Password</label>
+                  <label className="block text-sm font-semibold text-slate-700 mb-1.5 uppercase tracking-wide">
+                    Password
+                  </label>
                   <div className="relative">
-                    <input 
-                      type={showPassword ? "text" : "password"} 
+                    <input
+                      type={showPassword ? "text" : "password"}
                       value={formData.password}
                       onChange={(e) => handleChange('password', e.target.value)}
                       placeholder="Enter your password!"
-                      className="w-full px-2 py-2 rounded-xl border border-gray-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition-all placeholder:text-gray-400"
+                      className={`w-full px-4 py-2.5 pr-11 rounded-xl border text-sm
+                        placeholder:text-slate-400 outline-none transition-all
+                        ${errors.password
+                          ? 'border-red-400 bg-red-50 focus:border-red-500'
+                          : 'border-slate-300 bg-slate-50 focus:border-[#1a2744] focus:ring-2 focus:ring-[#1a2744]/10'
+                        }`}
                     />
-                    <button 
+                    <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
                     >
                       {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                     </button>
                   </div>
-                  {errors.password && <p className="text-sm text-red-600 mt-1">{errors.password}</p>}
+                  {errors.password && (
+                    <p className="text-xs text-red-600 mt-1">{errors.password}</p>
+                  )}
                 </div>
+
                 <div className="flex items-center justify-between">
                   <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
-                    <span className="text-sm text-gray-600">Remember Me</span>
+                    <input
+                      type="checkbox"
+                      className="w-4 h-4 rounded border-slate-300 text-[#1a2744] focus:ring-[#1a2744]"
+                    />
+                    <span className="text-sm text-slate-600">Remember Me</span>
                   </label>
-                  <a href="#" className="text-sm font-semibold text-blue-600 hover:text-blue-700">Forgot password?</a>
+                  <a href="#" className="text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline">
+                    Forgot password?
+                  </a>
                 </div>
+
               </div>
 
-              <Button 
-                type="submit" 
-                className="w-full py-4text-lg font-bold shadow-lg shadow-blue-900/20 mt-4 flex items-center justify-center gap-2"
+              <Button
+                type="submit"
+                className="w-full py-3 text-sm font-bold shadow-lg mt-4 flex items-center justify-center gap-2 bg-[#1a2744] hover:bg-[#263560] text-white rounded-xl transition-colors"
                 disabled={loading}
               >
                 {loading ? (
-                  <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin "></div>
+                  <div className="w-5 h-5 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
                 ) : (
-                  <>Access Admin Portal</>
+                  <>
+                    <UserCheck size={18} />
+                    Access Admin Portal
+                  </>
                 )}
               </Button>
-            </form>
 
-            {/* <div className="mt-2 pt-2 border-t border-gray-100 text-center">
-              <p className="text-gray-500 text-sm">
-                Need help? <a href="#" className="text-blue-600 font-bold hover:underline">Contact System Administrator</a>
-              </p>
-            </div> */}
+            </form>
           </div>
         </div>
       </div>
     </div>
   );
-};
+}
