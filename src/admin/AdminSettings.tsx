@@ -21,34 +21,6 @@ export const AdminSettings: React.FC = () => {
       </div>
 
       <div className="space-y-6">
-        <Card title="Institutional Branding">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-            <div className="space-y-4">
-              <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">Institution Name</label>
-                <input 
-                  type="text" 
-                  defaultValue="Kyambogo University" 
-                  className="w-full px-4 py-3 rounded border border-slate-200 focus:border-[#1e3a5f] focus:ring-1 focus:ring-[#1e3a5f]/20 outline-none transition-all text-sm font-medium"
-                />
-              </div>
-              <div>
-                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-2">Institutional Domain</label>
-                <input 
-                  type="text" 
-                  defaultValue="kyualert.kyu.ac.ug"
-                  className="w-full px-4 py-3 rounded border border-slate-200 focus:border-[#1e3a5f] focus:ring-1 focus:ring-[#1e3a5f]/20 outline-none transition-all text-sm font-medium"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col items-center justify-center p-8 bg-slate-50/50 rounded border-2 border-dashed border-slate-200 group hover:border-[#1e3a5f]/30 transition-colors cursor-pointer aspect-square md:aspect-auto">
-               <div className="w-16 h-16 bg-white rounded flex items-center justify-center shadow-sm border border-slate-100 group-hover:scale-105 transition-transform">
-                  <Building size={32} className="text-[#1e3a5f]" />
-               </div>
-               <p className="mt-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Update Signature Logo</p>
-            </div>
-          </div>
-        </Card>
 
         <Card title="Distribution Protocols">
           <div className="space-y-4">
@@ -86,7 +58,7 @@ export const AdminSettings: React.FC = () => {
                 <div className="flex items-center gap-3">
                    <div className="h-10 w-10 rounded bg-[#f97316] flex items-center justify-center text-white font-bold border-2 border-white shadow-sm ring-4 ring-[#f97316]/5">SJ</div>
                    <div>
-                      <p className="font-bold text-slate-800 text-sm">Dr. Sarah Johnson</p>
+                      <p className="font-bold text-slate-800 text-sm">Nabaale Jamie</p>
                       <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Main System Controller</p>
                    </div>
                 </div>
@@ -96,7 +68,7 @@ export const AdminSettings: React.FC = () => {
                 <div className="flex items-center gap-3">
                    <div className="h-10 w-10 rounded bg-[#1e3a5f] flex items-center justify-center text-white font-bold border-2 border-white shadow-sm ring-4 ring-[#1e3a5f]/5">AM</div>
                    <div>
-                      <p className="font-bold text-slate-800 text-sm">Aaron Miller</p>
+                      <p className="font-bold text-slate-800 text-sm">Paasi Reagan</p>
                       <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Digital Ops Manager</p>
                    </div>
                 </div>
