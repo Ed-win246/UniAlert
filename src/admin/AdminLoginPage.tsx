@@ -65,7 +65,7 @@ function validateForm(data:LoginFormData):LoginFormErrors{
 }
 
   return (
-    <div className="min-h-screen bg-[#12003d] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#fff4d6] flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-auto flex flex-col relative z-10 px-10 py-10 backdrop-blur-md ">
         <div className="w-full flex justify-center items-center ">
           <div className="w-full">
