@@ -32,7 +32,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     handleChange('role', role);
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const validationErrors = validateForm(formData);
@@ -43,15 +43,46 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     }
 
     setLoading(true);
-    setTimeout(() => {
-      const names: Record<Role,string>={
-        Staff: 'Hellen',
-        Student: 'Jamirah',
-        Guest: 'Guest User'
-      };
-      onLogin(formData.role, names[formData.role]);
+
+    try {
+      const response = await fetch('http://localhost:3000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErrors((prev) => ({
+          ...prev,
+          general: data.message || data.error || 'Invalid credentials. Please check your email and password.',
+        }));
+        return;
+      }
+
+      // Check if logged-in user matches role if backend provides it
+      const userRole = data.user?.role || formData.role;
+      const loggedInName = data.user?.first_name 
+        ? `${data.user.first_name} ${data.user.last_name || ''}`.trim()
+        : formData.email;
+
+      onLogin(userRole, loggedInName);
+    } catch (err) {
+      console.error('Login error:', err);
+      setErrors((prev) => ({
+        ...prev,
+        general: 'Unable to connect to backend server. Please ensure backend is running on port 3000.',
+      }));
+    } finally {
       setLoading(false);
-    }, 800);
+    }
   };
 
 function validateForm(data:LoginFormData):LoginFormErrors{
@@ -119,6 +150,11 @@ function validateForm(data:LoginFormData):LoginFormErrors{
             <p className="text-gray-500 mb-2">Select Your Role and Enter Credentials To Access Your Portal!.</p>
 
             <form onSubmit={handleLogin} className="space-y-6">
+              {errors.general && (
+                <div className="bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl p-3 text-center font-medium">
+                  {errors.general}
+                </div>
+              )}
               {/* Role Selection */}
               <div className="grid grid-cols-3 gap-3 mb-2">
                 {([ 'Staff', 'Student'] as Role[]).map(role => (
