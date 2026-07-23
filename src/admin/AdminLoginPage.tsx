@@ -10,7 +10,7 @@ interface AdminLoginPageProps {
 export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState<LoginFormData>({email:'',password:'',role:'Admin'});
+  const [formData, setFormData] = useState<LoginFormData>({email:'',password:''});
   const [errors, setErrors] = useState<LoginFormErrors>({general:''});
 
   const handleChange=(field: keyof LoginFormData, value:string)=>{
@@ -25,7 +25,7 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onLogin }) => {
     }
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const validationErrors = validateForm(formData);
@@ -36,13 +36,44 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onLogin }) => {
     }
 
     setLoading(true);
-    setTimeout(() => {
-      const name = {
-        Admin: 'Atuhaire Edwin',
-      };
-      onLogin(name['Admin']);
+
+    try {
+      const response = await fetch('http://localhost:3000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErrors((prev) => ({
+          ...prev,
+          general: data.message || data.error || 'Invalid email or password',
+        }));
+        return;
+      }
+
+      const loggedInName = data.user?.first_name 
+        ? `${data.user.first_name} ${data.user.last_name || ''}`.trim()
+        : formData.email;
+
+      onLogin(loggedInName);
+    } catch (err) {
+      console.error('Login error:', err);
+      setErrors((prev) => ({
+        ...prev,
+        general: 'Unable to connect to server. Please ensure the backend is running on port 3000.',
+      }));
+    } finally {
       setLoading(false);
-    }, 800);
+    }
   };
 
 function validateForm(data:LoginFormData):LoginFormErrors{
@@ -87,6 +118,11 @@ function validateForm(data:LoginFormData):LoginFormErrors{
             </p>
 
             <form onSubmit={handleLogin} className="space-y-6">
+              {errors.general && (
+                <div className="bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl p-3 text-center font-medium">
+                  {errors.general}
+                </div>
+              )}
               <div className="space-y-4">
 
                 <div>
