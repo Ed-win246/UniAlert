@@ -94,8 +94,6 @@ function validateForm(data:LoginFormData):LoginFormErrors{
   }
   if(!data.password.trim()){
     errors.password='Password is required';
-  }else if(!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_#])/.test(data.password)){
-    errors.password='Must have uppercase, lowercase, number and special character.';
   }
   if (!data.role) {
     errors.role='Please select a role';

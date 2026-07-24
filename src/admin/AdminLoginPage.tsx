@@ -34,7 +34,6 @@ export const AdminLoginPage: React.FC<AdminLoginPageProps> = ({ onLogin }) => {
     if (validationErrors.email || validationErrors.password) {
       return;
     }
-
     setLoading(true);
 
     try {
