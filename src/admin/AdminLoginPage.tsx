@@ -85,12 +85,6 @@ function validateForm(data:LoginFormData):LoginFormErrors{
   }
   if(!data.password.trim()){
     errors.password='Password is required';
-  }else if(data.password.length<6){
-    errors.password='Password must be at least 6 characters long.!';
-
-  }
-  else if(!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_#])/.test(data.password)){
-    errors.password='Must have uppercase, lowercase, number and special character.';
   }
   return errors;
 }
